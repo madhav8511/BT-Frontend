@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         IMAGE_NAME = "madhavgirdhar/bt-frontend"
-        DOCKERHUB_CREDS = "dockerhub-creds"
         VAULT_CREDS = "ansible-vault-pass"
     }
 
@@ -11,7 +10,8 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                checkout scm
+                git branch: 'main',
+                    url: 'https://github.com/madhav8511/BT-Frontend.git'
             }
         }
 
@@ -20,25 +20,19 @@ pipeline {
                 script {
                     echo "Building Docker image..."
                     sh """
-                        docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} -t ${IMAGE_NAME}:latest .
+                        docker build -t ${IMAGE_NAME}:latest .
                     """
                 }
             }
         }
 
-        stage('Push Docker Image to DockerHub') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: "${DOCKERHUB_CREDS}",
-                    usernameVariable: "DOCKER_USER",
-                    passwordVariable: "DOCKER_PASS"
-                )]) {
-                    sh """
-                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                        docker push ${IMAGE_NAME}:${BUILD_NUMBER}
-                        docker push ${IMAGE_NAME}:latest
-                        docker logout
-                    """
+       stage("Push to Docker Hub"){
+            steps{
+                echo "Pushing Image to Hub..."
+                script{
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
+                        docker.image("${DOCKER_IMAGE}:latest").push()
+                    }
                 }
             }
         }
