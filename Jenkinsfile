@@ -31,7 +31,7 @@ pipeline {
                 echo "Pushing Image to Hub..."
                 script{
                     docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
-                        docker.image("${DOCKER_IMAGE}:latest").push()
+                        docker.image("${IMAGE_NAME}:latest").push()
                     }
                 }
             }
