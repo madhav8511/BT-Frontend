@@ -46,7 +46,7 @@ pipeline {
                     sh '''
                         echo "$VAULT_PASS" > .vault_pass
 
-                        ansible-playbook playbook.yml \
+                        ansible-playbook playbook.yaml \
                           -i inventory.ini \
                           --vault-password-file .vault_pass \
                           --extra-vars "app_version=${BUILD_NUMBER}"
