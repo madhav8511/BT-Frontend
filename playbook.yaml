@@ -15,9 +15,8 @@
         mode: '0600'
 
     - name: Apply frontend manifest (creates deployment/service if missing)
-      environment:
-        KUBECONFIG: "{{ kubeconfig_dest }}"
       command: >
+        KUBECONFIG={{ kubeconfig_dest }}
         kubectl apply -f frontend-deployment.yaml
       register: apply_out
 
@@ -25,7 +24,6 @@
         var: apply_out.stdout_lines
 
     - name: Restart deployment
-      environment:
-        KUBECONFIG: "{{ kubeconfig_dest }}"
       command: >
+        KUBECONFIG={{ kubeconfig_dest }}
         kubectl rollout restart deployment/brain-frontend
