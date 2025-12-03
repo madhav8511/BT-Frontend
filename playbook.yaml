@@ -23,3 +23,9 @@
 
     - debug:
         var: apply_out.stdout_lines
+
+    - name: Restart deployment
+      environment:
+        KUBECONFIG: "{{ kubeconfig_dest }}"
+      command: >
+        kubectl rollout restart deployment/brain-frontend
