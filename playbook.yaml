@@ -1,0 +1,25 @@
+---
+- name: Deploy brain-frontend to Minikube
+  hosts: local
+  connection: local
+
+  vars:
+    kubeconfig_src: kubeconfig-jenkins.yaml
+    kubeconfig_dest: /tmp/kubeconfig-jenkins
+
+  tasks:
+    - name: Copy kubeconfig (decrypted) for kubectl
+      copy:
+        src: "{{ kubeconfig_src }}"
+        dest: "{{ kubeconfig_dest }}"
+        mode: '0600'
+
+    - name: Apply frontend manifest (creates deployment/service if missing)
+      environment:
+        KUBECONFIG: "{{ kubeconfig_dest }}"
+      command: >
+        kubectl apply -f frontend-deployment.yaml
+      register: apply_out
+
+    - debug:
+        var: apply_out.stdout_lines
