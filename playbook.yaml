@@ -16,7 +16,7 @@
 
     - name: Apply frontend manifest (creates deployment/service if missing)
       shell: |
-        KUBECONFIG={{ kubeconfig_dest }} kubectl apply -f frontend-deployment.yaml
+        KUBECONFIG={{ kubeconfig_dest }} kubectl apply -f frontend-deployment.yaml --validate=false
       register: apply_out
 
     - debug:
