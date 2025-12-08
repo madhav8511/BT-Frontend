@@ -3,26 +3,5 @@
   hosts: local
   connection: local
 
-  vars:
-    kubeconfig_src: kubeconfig-jenkins.yaml
-    kubeconfig_dest: /tmp/kubeconfig-jenkins
-
-  tasks:
-    - name: Copy kubeconfig (decrypting vault file)
-      ansible.builtin.copy:
-        src: "{{ kubeconfig_src }}"
-        dest: "{{ kubeconfig_dest }}"
-        decrypt: yes
-        mode: '0600'
-
-    - name: Apply frontend manifest (creates deployment/service if missing)
-      shell: |
-        KUBECONFIG={{ kubeconfig_dest }} kubectl apply -f frontend-deployment.yaml --validate=false
-      register: apply_out
-
-    - debug:
-        var: apply_out.stdout_lines
-
-    - name: Restart deployment
-      shell: |
-        KUBECONFIG={{ kubeconfig_dest }} kubectl rollout restart deployment/brain-frontend
+  roles:
+    - brain_frontend

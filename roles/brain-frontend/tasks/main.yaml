@@ -1,0 +1,6 @@
+---
+- name: Copy kubeconfig securely
+  include_tasks: copy_kubeconfig.yaml
+
+- name: Deploy frontend application
+  include_tasks: deploy.yaml

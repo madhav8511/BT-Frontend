@@ -1,0 +1,12 @@
+---
+- name: Apply frontend manifest
+  shell: |
+    KUBECONFIG={{ kubeconfig_dest }} \
+    kubectl apply -f {{ deployment_file }} --validate=false
+  register: apply_out
+
+- debug:
+    var: apply_out.stdout_lines
+
+- name: Notify restart
+  notify: Restart Brain Frontend

@@ -1,0 +1,5 @@
+---
+- name: Restart Brain Frontend
+  shell: |
+    KUBECONFIG={{ kubeconfig_dest }} \
+    kubectl rollout restart deployment/{{ deployment_name }}

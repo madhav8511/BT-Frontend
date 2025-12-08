@@ -1,0 +1,4 @@
+kubeconfig_src: kubeconfig-jenkins.yaml
+kubeconfig_dest: /tmp/kubeconfig-jenkins
+deployment_file: frontend-deployment.yaml
+deployment_name: brain-frontend
