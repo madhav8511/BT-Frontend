@@ -12,5 +12,6 @@
   debug:
     msg: "Restarting deployment"
   notify: Restart Brain Frontend
+  changed_when: true
 
   
