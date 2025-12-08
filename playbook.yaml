@@ -14,7 +14,9 @@
         dest: "{{ kubeconfig_dest }}"
         decrypt: yes
         mode: '0600'
-        
+        force: yes
+
+
     - name: Debug kubeconfig content before kubectl runs
       command: cat /tmp/kubeconfig-jenkins
       register: debug_kc
