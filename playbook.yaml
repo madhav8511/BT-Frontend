@@ -8,10 +8,11 @@
     kubeconfig_dest: /tmp/kubeconfig-jenkins
 
   tasks:
-    - name: Copy kubeconfig (decrypted) for kubectl
-      copy:
+    - name: Copy kubeconfig (decrypting vault file)
+      ansible.builtin.copy:
         src: "{{ kubeconfig_src }}"
         dest: "{{ kubeconfig_dest }}"
+        decrypt: yes
         mode: '0600'
 
     - name: Apply frontend manifest (creates deployment/service if missing)
