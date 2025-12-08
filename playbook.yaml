@@ -14,15 +14,6 @@
         dest: "{{ kubeconfig_dest }}"
         decrypt: yes
         mode: '0600'
-        
-    - name: Debug kubeconfig content before kubectl runs
-      command: cat /tmp/kubeconfig-jenkins
-      register: debug_kc
-      ignore_errors: yes
-
-    - debug:
-        var: debug_kc.stdout
-
 
     - name: Apply frontend manifest (creates deployment/service if missing)
       shell: |
