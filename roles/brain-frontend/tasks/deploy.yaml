@@ -9,4 +9,8 @@
     var: apply_out.stdout_lines
 
 - name: Notify restart
+  debug:
+    msg: "Restarting deployment"
   notify: Restart Brain Frontend
+
+  
