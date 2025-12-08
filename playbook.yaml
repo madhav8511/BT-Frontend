@@ -13,8 +13,9 @@
         src: "{{ kubeconfig_src }}"
         dest: "{{ kubeconfig_dest }}"
         decrypt: yes
-        mode: '0600'
         force: yes
+        mode: '0600'
+      change_when: true
 
 
     - name: Debug kubeconfig content before kubectl runs
